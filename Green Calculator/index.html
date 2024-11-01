@@ -1,0 +1,128 @@
+<html>  
+<head>
+    <title>Green Calculator</title>
+    <style>
+        body {
+            background-image: url('Imagens/fundo.png');
+            background-size: cover;
+            background-repeat: no-repeat; 
+        }
+        h1 {
+            text-align: center;
+            margin: 0;
+        }
+        .caixa-texto {
+            background-color: rgba(255, 255, 255, 0.8); 
+            border: 2px solid #4CAF50; 
+            border-radius: 10px; 
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 800px; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+        }
+        .carrossel {
+            position: relative;
+            overflow: hidden;
+            width: 900px;
+            height: 400px;
+        }
+        .imagem {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+        .imagem.active {
+            display: block;
+        }
+        .btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            font-size: 18px;
+        }
+        .btn:first-of-type {
+            left: 10px;
+        }
+        .btn:last-of-type {
+            right: 10px;
+        }
+        .botao-calculadora {
+            display: block;
+            margin: 20px auto; /* Centraliza o botão */
+            padding: 10px 20px;
+            background-color: #2E7D32; /* Verde escuro */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+    <script>
+        let indice = 0;
+        mostrarImagem(indice);
+
+        function mostrarImagem(n) {
+            const imagens = document.querySelectorAll('.imagem');
+            if (n >= imagens.length) indice = 0;
+            if (n < 0) indice = imagens.length - 1;
+            imagens.forEach((img, i) => {
+                img.classList.remove('active');
+                if (i === indice) img.classList.add('active');
+            });
+        }
+
+        function proximo() {
+            indice++;
+            mostrarImagem(indice);
+        }
+
+        function anterior() {
+            indice--;
+            mostrarImagem(indice);
+        }
+
+        // Mudar imagem automaticamente a cada 5 segundos
+        setInterval(() => {
+            proximo();
+        }, 5000); // 5000 milissegundos = 5 segundos
+
+        function irParaCalculadora() {
+            window.location.href = 'calculadora.html';
+        }
+    </script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <h1 class="justificado">Green Calculator</h1>
+    <center>
+        <div class="imagens-container">
+            <div class="carrossel">
+                <img class="imagem active" src="imagens/ipe.png" alt="Ipe" width="800px" height="400px">
+                <img class="imagem" src="imagens/pau-brasil.png" alt="Brasil" width="800px" height="400px">
+                <img class="imagem" src="imagens/pitanga.png" alt="Pitanga" width="800px" height="400px">
+                <img class="imagem" src="imagens/floresta.png" alt="Floresta" width="800px" height="400px">
+		<img class="imagem" src="imagens/rio.png" alt="Rio" width="800px" height="400px">
+		<img class="imagem" src="imagens/abacateiro.png" alt="Abacateiro" width="800px" height="400px">
+		<img class="imagem" src="imagens/abacateiro.png" alt="Abacateiro" width="800px" height="400px">
+
+            </div>
+        </div>
+    </center>
+    <main>
+        <header>
+            <button class="botao-calculadora" onclick="irParaCalculadora()">Calculadora</button>
+        </header>
+        <div class="caixa-texto">
+            <p>Nós, da Green Calculator, temos o objetivo principal de ser um meio de compensação ambiental mais eficiente e preciso em relação a liberação e captura de Carbono de espécies de árvores. A ideia do projeto e sua concepção se deram nas primeiras aulas cedidas pelo Professor Israel Peres de Pensamento Computacional e a partir daí começaram-se as pesquisas sobre o assunto. Com os dados em mãos, o grupo composto por Alice Reichenbach, Davi Piva, Guilherme Grion, João Vitor Santiago, Letícia de Paula, Nicolas Duarte, Noah Bueno, Pietra Machado começaram a idealizar o design da calculadora, iniciar os primeiros testes com códigos de computação e criar as primeiras páginas do site. Após os primeiros testes, o caminho a se seguir estava claro. Usando de aplicativos como Python Tutor, Html, Bubble, Pages, Teams, IAs e Sketchbook o projeto começou a tomar forma. Usando de uma fórmula complexa e multi-facetada nós conseguimos chegar na quantidade de carbono por árvore e em uma proporção para compensar as emissões pelo desmatamento.</p>
+        </div>
+        <center>
+            <img src="imagens/logo.png" width="400px" height="300px">
+        </center>
+    </main>
+</body>
+</html>

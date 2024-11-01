@@ -1,0 +1,132 @@
+<html> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo de Saldo</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+            background-image: url('Imagens/fundo.png');
+            background-size: cover;
+            background-repeat: no-repeat;  
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        input { 
+            margin: 10px 0; 
+            padding: 10px; 
+            width: 80%; 
+            max-width: 300px; 
+            display: block; 
+            margin-left: auto; 
+            margin-right: auto; 
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px; 
+            display: block; 
+            margin-left: auto; 
+            margin-right: auto; 
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cálculo de Saldo de Espécies</h1>
+        <label for="numEspecies">Número de Espécies:</label>
+        <input type="number" id="numEspecies" min="1" required>
+        <div id="inputs"></div>
+        <button onclick="calcularSaldo()">Calcular Saldo</button>
+        <h2>Saldo Total: <span id="saldoTotal">0</span></h2>
+        
+        <!-- Botão para ir para index.html -->
+        <button onclick="window.location.href='index.html'">VOLTAR</button>
+    </div>
+
+    <script>
+        const catalogo = [
+            ["Ipê-amarelo", 0.8, 1.013],
+            ["Ipê-roxo", 0.4, 0.78],
+            ["Pau-brasil", 0.7, 0.308],
+            ["Embaúba", 0.8, 0.253],
+            ["Cambuci", 0.6, 0.163],
+            ["Pitanga", 0.65, 0.163],
+            ["Araucária", 0.7, 4.766],
+            ["Jatobá", 0.5, 4.766],
+            ["Pau-ferro", 0.6, 0.51],
+            ["Guapuruvu", 0.8, 4.766],
+            ["Pindaíba", 0.65, 0.162],
+            ["Pau-d'alho", 0.5, 0.369],
+            ["Canafístula", 0.85, 1.013],
+            ["Eucalipto", 0.7, 0.78],
+            ["Pinheiro-do-paraná", 0.7, 4.766],
+            ["Árvore-da-borracha", 0.7, 0.253],
+            ["Acácia", 0.7, 0.369],
+            ["Jabuticabeira", 0.8, 0.162],
+            ["Araçá", 0.7, 0.05],
+            ["Cabeludinha", 0.75, 0.05],
+            ["Abacateiro", 0.9, 1.013],
+            ["Caju", 0.9, 0.163]
+        ];
+
+        document.getElementById('numEspecies').addEventListener('input', function() {
+            const num = parseInt(this.value);
+            const inputsDiv = document.getElementById('inputs');
+            inputsDiv.innerHTML = '';
+            for (let i = 0; i < num; i++) {
+                inputsDiv.innerHTML += `
+                    <h3>Espécie ${i + 1}</h3>
+                    <label>Nome:</label>
+                    <input type="text" class="nomeEspecie" required>
+                    <label>Quantidade Positiva:</label>
+                    <input type="number" class="qtdPositiva" min="0" required>
+                    <label>Quantidade Negativa:</label>
+                    <input type="number" class="qtdNegativa" min="0" required>
+                `;
+            }
+        });
+
+        function calcularSaldo() {
+            const nomes = document.querySelectorAll('.nomeEspecie');
+            const qtsPositivas = document.querySelectorAll('.qtdPositiva');
+            const qtsNegativas = document.querySelectorAll('.qtdNegativa');
+            let saldoPositivo = 0;
+            let saldoNegativo = 0;
+
+            nomes.forEach((nomeInput, index) => {
+                const nome = nomeInput.value;
+                const qtdPositiva = parseInt(qtsPositivas[index].value);
+                const qtdNegativa = parseInt(qtsNegativas[index].value);
+                const especie = catalogo.find(item => item[0] === nome);
+
+                if (especie) {
+                    const [_, txg, cp] = especie;
+                    saldoPositivo += (qtdPositiva * txg) * cp;
+                    saldoNegativo += qtdNegativa * cp;
+                }
+            });
+
+            const saldoTotal = saldoPositivo - saldoNegativo;
+            document.getElementById('saldoTotal').textContent = saldoTotal.toFixed(2);
+        }
+    </script>
+</body>
+</html>
